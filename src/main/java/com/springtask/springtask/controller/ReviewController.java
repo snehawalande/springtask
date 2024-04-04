@@ -29,6 +29,12 @@ public class ReviewController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<List<Review>> getReviewsByCustomerId(@PathVariable Long customerId) {
+        List<Review> reviews = reviewService.getReviewsByCustomerId(customerId);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Review> createReview(@RequestBody Review review) {
         Review createdReview = reviewService.createOrUpdateReview(review);
@@ -48,4 +54,3 @@ public class ReviewController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-

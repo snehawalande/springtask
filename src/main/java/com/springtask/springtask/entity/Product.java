@@ -1,6 +1,9 @@
 package com.springtask.springtask.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -14,10 +17,18 @@ public class Product {
 
     private String description;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL) // Establish One-to-Many relationship with Review entity
+    @JsonIgnore
+    private List<Review> reviews; // Add reviews field
+
     // Getters and setters
 
     public Long getProductId() {
         return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getProductName() {
@@ -36,9 +47,11 @@ public class Product {
         this.description = description;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 }
-

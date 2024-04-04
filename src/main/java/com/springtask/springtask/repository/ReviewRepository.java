@@ -1,7 +1,13 @@
 package com.springtask.springtask.repository;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.springtask.springtask.entity.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ReviewRepository extends JpaRepository<Review, Long>{
+import java.util.List;
+
+@Repository
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    List<Review> findByCustomerCustomerId(Long customerId);
+
 }

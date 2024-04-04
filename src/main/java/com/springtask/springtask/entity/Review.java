@@ -1,5 +1,6 @@
 package com.springtask.springtask.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -12,14 +13,14 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonBackReference
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false) // Establish Many-to-One relationship with Customer entity
     private Customer customer;
 
     private int rating;
-
     private String comment;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -27,12 +28,12 @@ public class Review {
 
     // Getters and setters
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Product getProduct() {
@@ -75,4 +76,3 @@ public class Review {
         this.date = date;
     }
 }
-

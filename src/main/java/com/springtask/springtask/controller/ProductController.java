@@ -1,6 +1,7 @@
 package com.springtask.springtask.controller;
 
 import com.springtask.springtask.entity.Product;
+import com.springtask.springtask.entity.Review;
 import com.springtask.springtask.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -24,9 +26,14 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        return productService.getProductById(id)
-                .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
+        Optional<Product> product = productService.getProductById(id);
+        return product.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    @GetMapping("/{id}/reviews")
+    public ResponseEntity<List<Review>> getReviewsByProductId(@PathVariable Long id) {
+        List<Review> reviews = productService.getReviewsByProductId(id);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
     @PostMapping
@@ -48,4 +55,3 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-
